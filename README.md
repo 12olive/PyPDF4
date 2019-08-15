@@ -13,6 +13,11 @@ for better ongoing support to start in August 2018.
 
 Homepage (available soon): http://claird.github.io/PyPDF4/.
 
+## Update
+- 20190815  
+	Add support of merging chinese documents.
+
+
 ## Examples
 Please see the `samplecode/` folder.
 

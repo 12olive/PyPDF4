@@ -242,13 +242,23 @@ def pypdfBytes(s):
             return chr(s)
         if isinstance(s, bytes):
             return s
-        return s.encode('latin-1')
+        try:
+            r = s.encode('latin-1')
+            return r
+        except Exception as e:
+            r = s.encode('utf-8')
+            return r
     else:
         if isinstance(s, int):
             return bytes([s])
         if isinstance(s, bytes):
             return s
-        return s.encode('latin-1')
+        try:
+            r = s.encode('latin-1')
+            return r
+        except Exception as e:
+            r = s.encode('utf-8')
+            return r
 
 
 def pypdfUnicode(s):
