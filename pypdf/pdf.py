@@ -457,7 +457,7 @@ class PdfFileWriter(object):
         self.cloneReaderDocumentRoot(reader)
         self.appendPagesFromReader(reader, afterPageAppend)
 
-    def encrypt(self, userPwd, ownerPwd=None, use128Bits=True):
+    def encrypt(self, userPwd, ownerPwd=None, P=-1, use128Bits=True):
         """
         Encrypt this PDF file with the PDF Standard encryption handler.
 
@@ -466,6 +466,7 @@ class PdfFileWriter(object):
         :param str ownerPwd: The "owner password", which allows for opening the
             PDF files without any restrictions.  By default, the owner password
             is the same as the user password.
+        :param int P: permission value, -1 for permit everything, -4096 for deny anything
         :param bool use128Bits: flag as to whether to use 128bit encryption.
             When false, 40bit encryption will be used.  By default, this flag
             is on.
@@ -482,8 +483,7 @@ class PdfFileWriter(object):
             V = 1
             rev = 2
             keylen = int(40 / 8)
-        # Permit everything:
-        P = -1
+
         O = ByteStringObject(_alg33(ownerPwd, userPwd, rev, keylen))
         ID_1 = ByteStringObject(md5(b_(repr(time.time()))).digest())
         ID_2 = ByteStringObject(md5(b_(repr(random.random()))).digest())
