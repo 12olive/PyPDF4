@@ -539,14 +539,16 @@ class NameObject(str, PdfObject):
         except (UnicodeEncodeError, UnicodeDecodeError) as e:
             # Name objects should represent irregular characters
             # with a '#' followed by the symbol's hex number
-            if not pdf.strict:
-                warnings.warn(
-                    "Illegal character in Name Object", PdfReadWarning
-                )
-                return NameObject(name)
-            else:
-                return NameObject(name.decode('gbk'))
-                # raise PdfReadError("Illegal character in Name Object")
+            try:
+                if not pdf.strict:
+                    warnings.warn(
+                        "Illegal character in Name Object", PdfReadWarning
+                    )
+                    return NameObject(name)
+                else:
+                    return NameObject(name.decode('gbk'))
+            except Exception as e:
+                raise PdfReadError("Illegal character in Name Object")
 
 
 class DictionaryObject(dict, PdfObject):
