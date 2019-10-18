@@ -543,9 +543,10 @@ class NameObject(str, PdfObject):
                 warnings.warn(
                     "Illegal character in Name Object", PdfReadWarning
                 )
-                return NameObject(name.decode('gbk'))
+                return NameObject(name)
             else:
-                raise PdfReadError("Illegal character in Name Object")
+                return NameObject(name.decode('gbk'))
+                # raise PdfReadError("Illegal character in Name Object")
 
 
 class DictionaryObject(dict, PdfObject):
